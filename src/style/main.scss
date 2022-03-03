@@ -1,0 +1,623 @@
+// Imports          
+@import "variables";
+@import "mixins";
+@import "fonts";
+
+// General
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    transition: .5s;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: $backgroundGradiant;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+// Main
+main {
+    // Styling for all main sections
+    > section {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+
+        .btns {
+            @include flexCenter(column);
+
+            a {
+                font-family: 'Montserrat', sans-serif;
+                font-size: 24px;
+                color: white;
+                text-decoration: underline;
+
+                &:hover {
+                    opacity: 0.8
+                }
+            }
+
+            .start-btn, .submit-btn {
+                @include flexCenter(row);
+
+                margin-bottom: 25px;
+                width: 400px;
+                height: 75px;
+                text-decoration: none;
+                background-color: $mainColor;
+                border-radius: 50px;
+                box-shadow: 0 4px 4px #00000025;
+            }
+        }
+    }
+
+    // Landing section
+    #landing {
+        @include flexCenter(row);
+        
+        .stars {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+
+        .info {
+            @include flexSpaceBetween(column);
+
+            padding-bottom: 300px;
+            height: 700px;
+            z-index: 1;
+
+            p {
+                font-family: 'Rowdies', cursive;
+                font-size: 96px;
+                color: $mainColor;
+            }
+        }
+
+        .rocket-man {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+    }
+
+    // Submitted applications section
+    #submitted-applications {
+        display: none;
+
+        .wrapper {
+            width: 1150px;
+            margin: 0 auto;
+        }
+
+        h4 {
+            padding: 75px 0;
+            font-family: 'Rowdies', cursive;
+            font-size: 56px;
+            color: white;
+        }
+
+        .application {
+            margin-bottom: 10px;
+            width: 100%;
+
+            .header {
+                @include flexSpaceBetween(row);
+
+                padding: 0 15px;
+                height: 50px;
+                width: 100%;
+                background-color: $mainColor;
+                cursor: pointer;
+
+                p {
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 14px;
+                    color: white;
+                }
+            }
+
+            .info {
+                display: none;
+                width: 100%;
+                background-color: white;
+
+                .wrapper {
+                    width: 900px;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-gap: 50px;
+                    margin: 0 auto;
+
+                    // All Sections
+                    section {
+                        h6 {
+                            padding: 50px 0 25px;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 19px;
+                            font-style: italic;
+                            font-weight: 400;
+                            color: $mainColor;
+                            text-decoration: underline;
+                        }
+                    }
+
+                    // Personal Information Section
+                    .personal-information {
+                        .questions-answers {
+                            display: flex;
+
+                            p {
+                                padding: 15px 0px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 13px;
+                                font-style: italic;
+                                color: black;
+    
+                                span {
+                                    padding-left: 50px;
+                                    color: $formColor;
+                                }
+                            }
+
+                            .questions {
+                                padding-right: 50px;
+                            }
+
+                            .answers {
+                                p {
+                                    color: $formColor;
+                                }
+                            }
+                        }
+                    }
+                    // Skillset section
+                    .skillset {
+                        .skill {
+                            display: flex;
+
+                            p {
+                                padding: 15px 0px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 13px;
+                                font-style: italic;
+                                color: black;
+                            }
+
+                            .skill-experience {
+                                padding-left: 50px;
+                            }
+                        }
+                    }
+
+                    // Covid sections
+                    .covid {
+                        .question {
+                            padding-bottom: 50px;
+
+                            p {
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 14px;
+                                color: black;
+                            }
+
+                            > p {
+                                padding-bottom: 10px;
+                                font-size: 18px;
+                            }
+                            
+                            .answer {
+                                padding: 10px 0 10px 7.5px;
+                                display: flex;
+                                align-items: center;
+
+                                p {
+                                    padding-left: 5px;
+                                }
+                            }
+
+                            .when {
+                                padding-top: 50px;
+
+                                > p {
+                                    padding-bottom: 10px;
+                                    font-size: 18px;
+                                }   
+
+                                .date {
+                                    @include flexSpaceBetween(row);
+
+                                    position: relative;
+                                    margin: 25px 0;
+                                    padding: 0 50px;
+                                    width: 350px;
+                                    height: 50px;
+                                    border: 1px solid $formColor;
+                                    
+                                    p {                                        
+                                        font-family: 'Montserrat', sans-serif;
+                                        font-size: 14px;
+                                        font-style: italic;
+                                        color: black;
+                                    }
+
+                                    img {
+                                        position: absolute;
+                                        top: 50%;
+                                        right: 5%;
+                                        transform: translate(-50%, -50%);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Insights section 
+                    .insigts {
+                        .question {
+                            padding-bottom: 50px;
+
+                            p {
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 14px;
+                                color: black;
+                            }
+
+                            > p {
+                                padding-bottom: 10px;
+                                font-size: 18px;
+                            }
+                            
+                            .answer {
+                                padding: 10px 0 10px 7.5px;
+                                display: flex;
+                                align-items: center;
+
+                                p {
+                                    padding-left: 5px;
+                                }
+                            }
+
+                            .text-answer {
+                                margin: 25px 0;
+                                padding: 25px;
+                                width: 450px;
+                                height: 125px;
+                                border: 1px solid $formColor;
+
+                                p {
+                                    font-family: 'Montserrat', sans-serif;
+                                    font-size: 14px;
+                                    font-style: italic;
+                                    color: black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .application.active {
+            margin-top: 20px;
+
+            .header {
+                background-color: #F05039;
+            }
+
+            .info {
+                display: block;
+            }
+        }
+    }
+
+    // Slider section
+    #slider {
+        display: none;
+        
+        // Both left and right divs
+        > div {
+            @include flexSpaceBetween(column);
+            width: 50%;
+
+            .wrapper {
+                width: 725px;
+                margin: 0 auto;
+            }
+            
+            // All sections in left and right divs
+            section {
+                width: 100%;
+                height: 100%;
+
+                .header {
+                    @include flexCenter(row);
+    
+                    width: 100%;
+                    height: 350px;
+    
+                    h4 {
+                        font-family: 'Rowdies', cursive;
+                        font-size: 64px;
+                        color: $mainColor;
+                    }
+                }
+
+                .info {
+                    @include flexCenter(column);
+
+                    width: 100%;
+
+                    form {
+                        display: flex;
+                        flex-direction: column;
+
+                        .input-div {
+                            position: relative;
+
+                            .error-message {
+                                position: absolute;
+                                bottom: -5px;
+                                left: 50px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 12px;
+                                font-style: italic;
+                                color: $mainColor;
+                            }
+
+                            &.error {
+                                input {
+                                    border: 1px solid $mainColor;
+                                }
+                            }
+                        }
+
+
+                        input[type=text], input[type=email], input[type=tel], input[type=date], select {
+                            margin: 20px 0;
+                            padding: 0 50px;
+                            width: 450px;
+                            height: 50px;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 14px;
+                            font-style: italic;
+                            color: black;
+                            border: 1px solid $formColor;
+                            outline: none;
+                        }
+
+                        button {
+                            width: 200px;
+                            height: 35px;
+                            color: white;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 12px;
+                            background-color: $mainColor;
+                            border: 0;
+                            outline: 0;
+                            cursor: pointer;
+
+                            &:hover {
+                                opacity: 0.9;
+                            }
+                        }
+
+                        .custom-select {
+                            position: relative;
+
+                            .select-hidden {
+                                display: none;
+                            }
+
+                            img {
+                                position: absolute;
+                                top: 50%;
+                                right: 5%;
+                                transform: translate(-50%, -50%);
+                                pointer-events: none;
+                            }
+                        }
+
+                        .question {
+                            padding-bottom: 50px;
+                            display: flex;
+                            flex-direction: column;
+
+                            p {
+                                padding-bottom: 10px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 18px;
+                                color: black;
+                            }
+
+                            input[type=radio] {
+                                margin: 0 10px 0 7.5px;
+                                height: 12px;
+                                width: 12px;
+                            }
+    
+                            label {
+                                padding: 5px 0;
+                                display: flex;
+                                align-items: center;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 14px;
+                                color: black;
+                            }
+
+                            textarea {
+                                margin: 20px 0;
+                                padding: 25px;
+                                width: 525px;
+                                height: 125px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 14px;
+                                font-style: italic;
+                                color: black;
+                                border: 1px solid $formColor;
+                                outline: none;
+                                resize: none;
+                            }
+
+                            .when {
+                                padding-top: 50px;
+
+                                .custom-date-input {
+                                    position: relative;
+
+                                    img {
+                                        position: absolute;
+                                        top: 50%;
+                                        right: 5%;
+                                        transform: translate(-50%,-50%);
+                                    }
+                                }
+
+                                .error-message {
+                                    bottom: -10px;
+                                }
+                            }
+                        }
+                    }
+
+                    > p {
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 24px;
+                        color: white;
+                        line-height: 200%;
+                        letter-spacing: 0.05em;
+                    }
+                }
+            }
+
+            // Personal information slide
+            .personal-information {
+                display: none;
+            }
+
+            // Technical skillset slide
+            .technical-skillset {
+                display: none;
+
+                form {
+                    align-items: flex-end;
+                }
+
+                .skill-set {
+                    padding-top: 50px;
+                    
+                    .skill {
+                        @include flexSpaceBetween(row);
+
+                        margin: 20px 0;
+                        padding: 0 15px;
+                        width: 450px;
+                        height: 50px;
+                        border: 1px solid $formColor;
+                        outline: none;
+
+                        .skill-text {
+                            display: flex;
+
+                            p {
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 14px;
+                                font-style: italic;
+                                color: black;
+
+                            }
+
+                            .skill-experience {
+                                padding-left: 50px;
+                            }
+                        }
+
+                        img {
+                            cursor: pointer;
+                            
+                            &:hover {
+                                opacity: 0.9;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .covid {
+                display: none;
+
+                .info {
+                    align-items: flex-start;
+                }
+            }
+
+            .redberrian-insights {
+                display: none;
+            }
+            
+            .slider-nav {
+                padding: 50px;
+                display: flex;
+
+                .slides {
+                    padding: 0 10px;
+                    display: flex;
+
+                    div {
+                        margin: 0 5px;
+                        width: 20px;
+                        height: 20px;
+                        background-color: $mainColor;
+                        border-radius: 50%;
+                        opacity: 0.2;
+                    }
+    
+                    div.done {
+                        opacity: 1;
+                    }
+                }
+
+                img {
+                    cursor: pointer;
+
+                    &:hover {
+                        opacity: 0.9;
+                    }
+                }
+            }
+        }
+
+        .left {
+            background-color: white;
+        }
+    }
+
+    #submit {
+        @include flexCenter(row);
+        display: none;
+
+        .btns {
+            display: none;
+        }
+
+        p {
+            font-family: 'Rowdies', cursive;
+            font-size: 96px;
+            color: $mainColor;
+        }
+    }
+}
