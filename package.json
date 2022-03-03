@@ -1,0 +1,24 @@
+{
+  "name": "redberry-questionnaire",
+  "version": "1.0.0",
+  "description": "",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "dev": "parcel build index.html --public-url ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Domianidze/redberry-questionnaire.git"
+  },
+  "author": "Sandro Domianidze",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Domianidze/redberry-questionnaire/issues"
+  },
+  "homepage": "https://github.com/Domianidze/redberry-questionnaire#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.3.2",
+    "parcel": "^2.3.2"
+  }
+}
