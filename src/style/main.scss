@@ -9,7 +9,6 @@
     padding: 0;
     list-style: none;
     text-decoration: none;
-    transition: .5s;
     box-sizing: border-box;
 }
 
@@ -29,8 +28,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 // Main
 main {
+    width: 100%;
+    min-height: 100vh;
+
     // Styling for all main sections
-    > section {
+    .main-section {
         position: relative;
         width: 100%;
         min-height: 100vh;
@@ -96,8 +98,9 @@ main {
     }
 
     // Submitted applications section
-    #submitted-applications {
+    #submitted {
         display: none;
+        opacity: 0;
 
         .wrapper {
             width: 1150px;
@@ -328,6 +331,7 @@ main {
     // Slider section
     #slider {
         display: none;
+        opacity: 0;
         
         // Both left and right divs
         > div {
@@ -609,6 +613,7 @@ main {
     #submit {
         @include flexCenter(row);
         display: none;
+        opacity: 0;
 
         .btns {
             display: none;
