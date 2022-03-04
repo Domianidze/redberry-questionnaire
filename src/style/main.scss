@@ -26,6 +26,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -webkit-appearance: none;
 }
 
+a, button {
+    transition: .5s;
+}
+
 // Main
 main {
     width: 100%;
@@ -99,6 +103,7 @@ main {
 
     // Submitted applications section
     #submitted {
+        padding-bottom: 75px;
         display: none;
         opacity: 0;
 
@@ -126,18 +131,28 @@ main {
                 width: 100%;
                 background-color: $mainColor;
                 cursor: pointer;
+                transition: .5s;
 
                 p {
                     font-family: 'Montserrat', sans-serif;
                     font-size: 14px;
                     color: white;
                 }
+
+                img {
+                    transition: .5s;
+                }
+
+                &:hover {
+                    opacity: 0.9;
+                }
             }
 
             .info {
-                display: none;
+                height: 0;
                 width: 100%;
                 background-color: white;
+                overflow: hidden;
 
                 .wrapper {
                     width: 900px;
@@ -145,6 +160,7 @@ main {
                     grid-template-columns: 1fr 1fr;
                     grid-gap: 50px;
                     margin: 0 auto;
+                    opacity: 0;
 
                     // All Sections
                     section {
@@ -316,14 +332,13 @@ main {
         }
 
         .application.active {
-            margin-top: 20px;
-
             .header {
+                margin-top: 20px;
                 background-color: #F05039;
-            }
 
-            .info {
-                display: block;
+                img {
+                    transform: rotate(-180deg);
+                }
             }
         }
     }

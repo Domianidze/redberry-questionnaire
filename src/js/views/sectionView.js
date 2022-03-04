@@ -1,5 +1,5 @@
 import gsap from "gsap";
-import { ANIMATION_TIME } from "../config"
+import { SECTION_ANIMATION_TIME } from "../config"
 
 class sectionView {
     addHandlerDisplaySection(handler) {
@@ -12,12 +12,12 @@ class sectionView {
         gsap.to(section, {
             opacity: 0,
             ease: 'Power2.easeOut',
-            duration: ANIMATION_TIME,
+            duration: SECTION_ANIMATION_TIME,
         })
 
         setTimeout(function() {
             section.style.display = 'none';
-        }, ANIMATION_TIME * 1000)
+        }, SECTION_ANIMATION_TIME * 1000)
     }
 
     displaySection(section) {
@@ -29,9 +29,9 @@ class sectionView {
             gsap.to(section, {
                 opacity: 1,
                 ease: 'Power2.easeOut',
-                duration: ANIMATION_TIME,
+                duration: SECTION_ANIMATION_TIME,
             })
-        }, ANIMATION_TIME * 1000)
+        }, SECTION_ANIMATION_TIME * 1000)
     }
 }
 

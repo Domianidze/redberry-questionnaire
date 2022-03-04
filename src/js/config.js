@@ -1,1 +1,2 @@
-export const ANIMATION_TIME = 0.75;
+export const SECTION_ANIMATION_TIME = 0.75;
+export const SUBMITTED_ANIMATION_TIME = 0.5;
