@@ -393,14 +393,15 @@
             <div class="left">
                 <div class="wrapper">
                     <!-- Personal Information Slide (Left) -->
-                    <section class="personal-information">
+
+                    <!-- <section class="personal-information">
                         <div class="header">
                             <h4>Hey, Rocketeer, what are your coordinates?</h4>
                         </div>
                         <div class="info">
                             <form>
                                 <div class="input-div error">
-                                    <input type="text" id="`" name="first-name" placeholder="First Name">
+                                    <input type="text" id="first-name" name="first-name" placeholder="First Name">
                                     <p class="error-message">* first name is required</p>
                                 </div>
                                 <div class="input-div error">
@@ -417,9 +418,11 @@
                                 </div>
                             </form>
                         </div>
-                    </section>
+                    </section> -->
+
                     <!-- Technical Skillset Slide (Left) -->
-                    <section class="technical-skillset">
+
+                    <!-- <section class="technical-skillset">
                         <div class="header">
                             <h4>Tell us about your skills</h4>
                         </div>
@@ -457,9 +460,11 @@
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section>  -->
+
                     <!-- Covid Slide (Left) -->
-                    <section class="covid">
+
+                    <!-- <section class="covid">
                         <div class="header">
                             <h4>Covid Stuff</h4>
                         </div>
@@ -488,7 +493,7 @@
                                     
                                     <div class="when">
                                         <p>When?</p>
-                                        <div class="input-div custom-date-input error">
+                                        <div class="input-div custom-date-input">
                                             <input type="date" id="covid-contact-date" name="covid-contact-date">
                                             <img src="src/img/slider/icons/calendar.png" alt="calendar">
                                             <p class="error-message"></p>
@@ -515,9 +520,11 @@
                                 </div>
                             </form>
                         </div>
-                    </section>
+                    </section> -->
+
                     <!-- Redberrian Insights (Left) -->
-                    <section class="redberrian-insights">
+
+                    <!-- <section class="insights">
                         <div class="header">
                             <h4>What about you?</h4>
                         </div>
@@ -548,15 +555,16 @@
                                 </div>
                             </form>
                         </div>
-                    </section>
+                    </section> -->
                 </div>
+                <!-- Slider navigation -->
                 <div class="slider-nav">
                     <img src="src/img/slider/icons/previous.png" alt="previous" class="previous">
                     <div class="slides">
-                        <div class="slide done"></div>
-                        <div class="slide done"></div>
-                        <div class="slide done"></div>
-                        <div class="slide"></div>
+                        <div class="slide completed active" data-goTo="1"></div>
+                        <div class="slide" data-goTo="2"></div>
+                        <div class="slide" data-goTo="3"></div>
+                        <div class="slide" data-goTo="4"></div>
                         <div class="slide"></div>
                     </div>
                     <img src="src/img/slider/icons/next.png" alt="next" class="next">
@@ -566,41 +574,48 @@
             <div class="right">
                 <div class="wrapper">
                     <!-- Personal Information Slide (Right) -->
-                    <section class="personal-information">
+
+                    <!-- <section class="personal-information">
                         <div class="header">
                             <h4>Redberry Origins</h4>
                         </div>
                         <div class="info">
                             <p>You watch “What? Where? When?” Yeah. Our founders used to play it. That’s where they got a question about a famous American author and screenwriter Ray Bradbury. Albeit, our CEO Gaga Darsalia forgot the exact name and he answered Ray Redberry. And at that moment, a name for a yet to be born company was inspired - Redberry 😇</p>
                         </div>
-                    </section>
+                    </section> -->
+
                     <!-- Technical Skillset Slide (Right) -->
-                    <section class="technical-skillset">
+
+                    <!-- <section class="technical-skillset">
                         <div class="header">
                             <h4>A bit about our battles</h4>
                         </div>
                         <div class="info">
                             <p>As we said, Redberry has been on the field for quite some time now, and we have touched and embraced a variety of programming languages, technologies, philosophies, and frameworks. We are battle-tested in PHP Laravel Stack with Vue.js, refined in React, and allies with Serverside technologies like Docker and Kubernetes, and now we have set foot in the web3 industry.</p>
                         </div>
-                    </section>
+                    </section> -->
+
                     <!-- Covid Slide (Right) -->
-                    <section class="covid">
+
+                    <!-- <section class="covid">
                         <div class="header">
                             <h4>Redberry Covid Policies</h4>
                         </div>
                         <div class="info">
                             <p>As this infamous pandemic took over the world, we adjusted our working practices so that our employees can be as safe and comfortable as possible. We have a hybrid work environment, so you can either work from home or visit our lovely office on Sairme Street. If it was up to us, we would love you to see us in the office because we think face-to-face communications > Zoom meetings. Both on the fun and productivity scales.</p>
                         </div>
-                    </section>
+                    </section> -->
+
                     <!-- Redberrian Insights (Right) -->
-                    <section class="redberrian-insights">
+
+                    <!-- <section class="insights">
                         <div class="header">
                             <h4>Redberrian Insights</h4>
                         </div>
                         <div class="info">
                             <p>We were soo much fun before the pandemic started! Parties almost every weekend and lavish employee birthday celebrations! Unfortunately, covid ruined that fun like it did almost everything else in the world. But we try our best to zhuzh it up a bit. For example, we host biweekly Devtalks where our senior and lead developers talk about topics they are passionate about. Previous topics have included Web3, NFT, Laravel 9, Kubernetes, etc. We hold these talks in the office but you can join our Zoom broadcast as well. Feel free to join either as an attendee or a speaker!</p>
                         </div>
-                    </section>
+                    </section> -->
                 </div>
             </div>
         </section>
@@ -608,7 +623,7 @@
         <section id="submit" class="main-section">
             <div class="btns">
                 <a href="#" class="submit-btn">Submit</a>
-                <a href="#">go back</a>
+                <a href="#slider">go back</a>
             </div>
             <p>Thanks for Joining 😊</p>
         </section>

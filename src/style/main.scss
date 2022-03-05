@@ -525,12 +525,12 @@ main {
 
             // Personal information slide
             .personal-information {
-                display: none;
+                // display: none;
             }
 
             // Technical skillset slide
             .technical-skillset {
-                display: none;
+                // display: none;
 
                 form {
                     align-items: flex-end;
@@ -577,15 +577,15 @@ main {
             }
 
             .covid {
-                display: none;
+                // display: none;
 
                 .info {
                     align-items: flex-start;
                 }
             }
 
-            .redberrian-insights {
-                display: none;
+            .insights {
+                // display: none;
             }
             
             .slider-nav {
@@ -603,15 +603,31 @@ main {
                         background-color: $mainColor;
                         border-radius: 50%;
                         opacity: 0.2;
+                        cursor: pointer;
+                        transition: .5s;
+
+                        &:hover {
+                            opacity: 0.8;
+                            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+                        }
                     }
     
-                    div.done {
+                    div.completed {
                         opacity: 1;
+
+                        &:hover {
+                            box-shadow: 1px 1px 5px black;
+                        }
+                    }
+
+                    div.active {
+                        box-shadow: 1px 1px 5px black;
                     }
                 }
 
                 img {
                     cursor: pointer;
+                    transition: .5s;
 
                     &:hover {
                         opacity: 0.9;
@@ -631,13 +647,15 @@ main {
         opacity: 0;
 
         .btns {
-            display: none;
+            display: flex;
         }
 
         p {
+            display: none;
             font-family: 'Rowdies', cursive;
             font-size: 96px;
             color: $mainColor;
+            opacity: 0;
         }
     }
 }

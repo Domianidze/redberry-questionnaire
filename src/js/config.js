@@ -1,2 +1,4 @@
 export const SECTION_ANIMATION_TIME = 0.75;
 export const SUBMITTED_ANIMATION_TIME = 0.5;
+export const SUBMIT_ANIMATION_TIME = 0.5;
+export const AMOUNT_OF_SLIDER_PAGES = 4;
