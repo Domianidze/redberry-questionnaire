@@ -1,3 +1,9 @@
+// GSAP
+import gsap from 'gsap';
+
+// Config
+import { SLIDER_ANIMATION_TIME } from '../../config';
+
 // Parent
 import SliderSectionView from './SliderSectionView';
 
@@ -20,27 +26,52 @@ class covidView extends SliderSectionView {
     }
 
     addHandlerDisplayWhen() {
-        this._covidContactQuestion.addEventListener('click', function() {
-            const yesRadio = this.querySelector('#covid-contact-yes');
+        const gsapTransition = function(e, radioName) {
+            const yesRadio = this.querySelector(radioName);
             const whenInput = this.querySelector('.when');
-
+    
+            // Avoid function running twice because of label (Guard Clause)
+            if(e.target.tagName === 'LABEL') return;
+    
             if(yesRadio.checked) {
+                // Avoid animation running twice
+                this.style.pointerEvents = 'none';
+    
                 whenInput.style.display = 'block';
+    
+                // Transition using GSAP
+                gsap.from(whenInput, {
+                    opacity: 0,
+                    ease: 'Power2.easeOut',
+                    duration: SLIDER_ANIMATION_TIME
+                });
+                setTimeout(() => {
+                    this.style.pointerEvents = 'auto';
+                }, SLIDER_ANIMATION_TIME * 1000)
             } else {
-                whenInput.style.display = 'none'
+                this.style.pointerEvents = 'none';
+    
+                // Transition using GSAP
+                gsap.to(whenInput, {
+                    opacity: 0,
+                    ease: 'Power2.easeOut',
+                    duration: SLIDER_ANIMATION_TIME
+                });
+                setTimeout(() => {
+                    whenInput.style.display = 'none'
+                    whenInput.style.opacity = '1'
+                    this.style.pointerEvents = 'auto';
+                }, SLIDER_ANIMATION_TIME * 1000)
             }
+        }
+
+        this._covidContactQuestion.addEventListener('click', function(e) {
+            gsapTransition.call(this, e, '#covid-contact-yes');
         });
 
-        this._vaccinateQuestion.addEventListener('click', function() {
-            const yesRadio = this.querySelector('#vaccinate-yes');
-            const whenInput = this.querySelector('.when');
-
-            if(yesRadio.checked) {
-                whenInput.style.display = 'block';
-            } else {
-                whenInput.style.display = 'none'
-            }
-        });
+        this._vaccinateQuestion.addEventListener('click', function(e) {
+            gsapTransition.call(this, e, '#vaccinate-yes');
+        })
     }
 
     getData() {
@@ -58,13 +89,15 @@ class covidView extends SliderSectionView {
         const data = this.getData();
         let error = false;
 
+        // Workspace Valdiation
         if(data.workSpace === '') {
             this._errors.workSpace.textContent = '* question required';
             error = true;
         } else {
             this._errors.workSpace.textContent = '';
         }
-
+        
+        // Covid Contact Validation
         if(data.covidContact === '') {
             this._errors.covidContact.textContent = '* question required';
             error = true;
@@ -72,6 +105,7 @@ class covidView extends SliderSectionView {
             this._errors.covidContact.textContent = '';
         }
 
+        // Covid Contact Date Validation
         if(data.covidContact === 'yes') {
             if(data.covidContactDate === '') {
                 this._errors.covidContactWhen.textContent = '* date required';
@@ -84,6 +118,7 @@ class covidView extends SliderSectionView {
             }
         }
 
+        // Vaccinate Validation
         if(data.vaccinate === '') {
             this._errors.vaccinate.textContent = '* question required';
             error = true;
@@ -91,6 +126,7 @@ class covidView extends SliderSectionView {
             this._errors.vaccinate.textContent = '';
         }
 
+        // Vaccinate Date Validation
         if(data.vaccinate === 'yes') {
             if(data.vaccinateDate === '') {
                 this._errors.vaccinateWhen.textContent = '* date required';
@@ -110,7 +146,7 @@ class covidView extends SliderSectionView {
         const curDate = new Date();
         const dateArr = date.split('-');
         const dateArrInt = dateArr.map(el => {
-           return parseInt(el);
+        return parseInt(el);
         }) 
 
         if(dateArr.length !== 3 || dateArr[1].length !== 2 || dateArr[2].length !== 2 || dateArr[0].length !== 4) {

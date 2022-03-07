@@ -1,4 +1,10 @@
-// Parent
+// GSAP
+import gsap from 'gsap';
+
+// Config
+import { SLIDER_ANIMATION_TIME } from '../../config';
+
+// Parent view
 import SliderSectionView from './SliderSectionView';
 
 // IMG
@@ -32,11 +38,20 @@ class skillsetView extends SliderSectionView {
         this._skillDiv.addEventListener('click', function(e) {
             const removeBtn = e.target.closest('.remove-btn');
 
+            // Guard Clase
             if(!removeBtn) return
 
             const skill = removeBtn.parentNode;
 
-            skill.parentNode.removeChild(skill);
+            // Transition using GSAP
+            gsap.to(skill, {
+                opacity: 0,
+                ease: 'Power2.easeOut',
+                duration: SLIDER_ANIMATION_TIME
+            });
+            setTimeout(function() {
+                skill.parentNode.removeChild(skill);
+            }, SLIDER_ANIMATION_TIME * 1000)
         });
     }
 
@@ -47,6 +62,7 @@ class skillsetView extends SliderSectionView {
 
         const data = this.getData().map(skill => skill[0]);
 
+        // Skill Name Validation
         if(skillName === 'hide') {
             this._errors.selectError.textContent = '* please select a skill';
             this._errors.selectError.parentNode.classList.add("error");
@@ -60,12 +76,13 @@ class skillsetView extends SliderSectionView {
             this._errors.selectError.parentNode.classList.remove("error");
         }
 
+        // Skill Experience Validation
         if(skillExperience === '') {
             this._errors.inputError.textContent = '* please enter skill experience'
             this._errors.inputError.parentNode.classList.add("error");
             error = true;
         } else if(+skillExperience < 1) {
-            this._errors.inputError.textContent = '* skill experience has higher than 0'
+            this._errors.inputError.textContent = '* skill experience has to be at least 1'
             this._errors.inputError.parentNode.classList.add("error");
             error = true;
         } else {
@@ -73,10 +90,11 @@ class skillsetView extends SliderSectionView {
             this._errors.inputError.parentNode.classList.remove("error");
         }
 
+        // Guard Clause
         if(error) return
         
         const markup = `
-            <div class="skill">
+            <div class="skill ${skillName}">
             <div class="skill-text">
             <p class="skill-name">${skillName}</p>
             <p class="skill-experience">Years of Experience: ${skillExperience}</p>
@@ -86,6 +104,14 @@ class skillsetView extends SliderSectionView {
         `
 
         this._skillDiv.insertAdjacentHTML('beforeend', markup);
+
+        // Transition using GSAP
+        const skill = this._skillDiv.querySelector(`.${skillName}`);
+        gsap.from(skill, {
+            opacity: 0,
+            ease: 'Power2.easeOut',
+            duration: SLIDER_ANIMATION_TIME
+        });
     }
     
     getData() {
@@ -103,6 +129,7 @@ class skillsetView extends SliderSectionView {
         const data = this.getData();
         let error = false;
 
+        // Validate
         if(data.length < 1) {
             this._errors.skillsError.textContent = '* please add atleast 1 skill';
             error = true;

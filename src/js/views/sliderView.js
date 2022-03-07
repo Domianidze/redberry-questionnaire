@@ -1,29 +1,78 @@
-// Section views
+// GSAP
+import gsap from "gsap";
+
+// Config
+import { AMOUNT_OF_SLIDER_PAGES } from "../config";
+import { SLIDER_ANIMATION_TIME } from "../config";
+
+// Sections
 import personalView from "./sliderSections/personalView";
 import technicalView from "./sliderSections/technicalView";
 import covidView from "./sliderSections/covidView";
 import insightsView from "./sliderSections/insightsView";
 
 class sliderView {
+    _parentElement = document.querySelector('#slider');
     _allSections = [personalView, technicalView, covidView, insightsView];
+    _allSectionsDOM = this._parentElement.querySelectorAll('section');
+    _allForms = this._parentElement.querySelectorAll('form');
+
+    slideAnimation(direction) {
+        // Animation using GSAP
+
+        gsap.to(this._allSectionsDOM, {
+            transform: `translateX(${direction === 'right' ? '-' : ''}125%)`,
+            ease: 'Power1.easeOut',
+            duration: SLIDER_ANIMATION_TIME
+        })
+        gsap.to(this._allSectionsDOM, {
+            transform: `translateX(${direction === 'left' ? '-' : ''}125%)`,
+            duration: 0,
+            delay: SLIDER_ANIMATION_TIME
+        })
+        gsap.to(this._allSectionsDOM, {
+            transform: 'translateX(0)',
+            ease: 'Power1.easeOut',
+            duration: SLIDER_ANIMATION_TIME,
+            delay: SLIDER_ANIMATION_TIME
+        })
+    }
+
+    errorAniamtion() {
+        // Animation using GSAP
+
+        gsap.fromTo(this._allForms, 0.1,{
+            x: -3,
+        }, 
+        {
+            x: 3,
+            repeat: 5,
+            yoyo: true,
+        });
+    }
     
     displaySection(section = 1) {
-        if(section >= 1 && section <= 4) {
-            this._allSections.forEach(section => section.hide());
-        }
+        setTimeout(() => {
+            // Check if section is valid
+            if(section >= 1 && section <= AMOUNT_OF_SLIDER_PAGES) {
+                this._allSections.forEach(section => section.hide());
+            }
 
-        if(section === 1) {
-            personalView.display();
-        } else if(section === 2) {
-            technicalView.display();
-        } else if(section === 3) {
-            covidView.display();
-        } else if(section === 4) {
-            insightsView.display();
-        }
+            // Display correct section
+            if(section === 1) {
+                personalView.display();
+            } else if(section === 2) {
+                technicalView.display();
+            } else if(section === 3) {
+                covidView.display();
+            } else if(section === 4) {
+                insightsView.display();
+            }
+        }, SLIDER_ANIMATION_TIME * 1000)
     }
 
     getData(section) {
+        // Get data from the correct section
         if(section === 1) {
             return personalView.getData();
         } else if(section === 2) {
@@ -36,6 +85,7 @@ class sliderView {
     }    
     
     valdiateData(section) {
+        // Valide data of the correct section
         if(section === 1) {
             return personalView.validate();
         } else if(section === 2) {

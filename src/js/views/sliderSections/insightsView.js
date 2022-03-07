@@ -1,3 +1,9 @@
+// GSAP
+import gsap from 'gsap';
+
+// Config
+import { SLIDER_ANIMATION_TIME } from '../../config';
+
 // Parent
 import SliderSectionView from './SliderSectionView';
 
@@ -16,16 +22,45 @@ class insightsView extends SliderSectionView {
         this.addHandlerDisplaySpeakDevtalks();
     }
 
-
     addHandlerDisplaySpeakDevtalks() {
-        this._attendOrganizeDevtalksQuestion.addEventListener('click', function() {
-            const yesRadio = this.querySelector('#attend-organize-devtalks-yes');
+        this._attendOrganizeDevtalksQuestion.addEventListener('click', function(e) {
+            const yesRadio = this.querySelector('input#attend-organize-devtalks-yes');
             const speakDevtalksQuestion = document.querySelector('.left .insights .speak-devtalks-question');
+           
+            // Avoid function running twice because of label (Guard Clause)
+            if(e.target.tagName === 'LABEL') return;
 
             if(yesRadio.checked) {
+                // Avoid animation running twice
+                this.style.pointerEvents = 'none';
+
                 speakDevtalksQuestion.style.display = 'block';
+
+                // Transition using GSAP
+                gsap.from(speakDevtalksQuestion, {
+                    opacity: 0,
+                    ease: 'Power2.easeOut',
+                    duration: SLIDER_ANIMATION_TIME
+                });
+                setTimeout(() => {
+                    this.style.pointerEvents = 'auto';
+                }, SLIDER_ANIMATION_TIME * 1000)
+                
             } else {
-                speakDevtalksQuestion.style.display = 'none'
+                // Avoid animation running twice
+                this.style.pointerEvents = 'none';
+
+                // Transition using GSAP
+                gsap.to(speakDevtalksQuestion, {
+                    opacity: 0,
+                    ease: 'Power2.easeOut',
+                    duration: SLIDER_ANIMATION_TIME
+                });
+                setTimeout(() => {
+                    speakDevtalksQuestion.style.display = 'none'
+                    speakDevtalksQuestion.style.opacity = 1
+                    this.style.pointerEvents = 'auto';
+                }, SLIDER_ANIMATION_TIME * 1000)
             }
         });
     }
@@ -43,6 +78,7 @@ class insightsView extends SliderSectionView {
         const data = this.getData();
         let error = false;
 
+        // Attend/Organize Devtalks Validation
         if(data.attendOrganizeDevtalks === '') {
             this._errors.attendOrganizeDevtalks.textContent = '* question required';
             error = true;
@@ -59,6 +95,7 @@ class insightsView extends SliderSectionView {
             }
         }
 
+        // Something Special Validation
         if(data.special === '') {
             this._errors.special.textContent = '* field required';
             error = true;

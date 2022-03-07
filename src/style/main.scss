@@ -362,6 +362,7 @@ main {
         > div {
             @include flexSpaceBetween(column);
             width: 50%;
+            overflow: hidden;
 
             .wrapper {
                 width: 725px;

@@ -1,4 +1,7 @@
+// Model
 import * as model from "./model";
+
+// Views
 import sectionView from "./views/sectionView";
 import landingView from "./views/landingView";
 import submittedView from "./views/submittedView";
@@ -6,12 +9,11 @@ import sliderView from "./views/sliderView";
 import navbarView from "./views/navbarView";
 import submitView from "./views/submitView";
 import technicalView from "./views/sliderSections/technicalView";
-import personalView from "./views/sliderSections/personalView";
 
 const controlSection = function(e) {
     let section = window.location.hash.slice(1);
 
-    // Guard Clause
+    // Check if section is valid or not (Guard Clause)
     if((section !== 'landing' && section !== 'submitted' && section !== 'slider' && (section === '' && e.type === 'load')) || section === model.state.curPage) return;
 
     if(section === '') section = 'landing';
@@ -48,8 +50,8 @@ const controlSlider = function(goTo) {
         // 1) Get and validate data from the correct page
         const error = sliderView.valdiateData(model.state.slider.curPage);
 
-        // Guard clause for error during validation
-        if(error) return;
+        // Check if we have an error and play error animation if needed (Guard Clause)
+        if(error) return sliderView.errorAniamtion();
 
         data = sliderView.getData(model.state.slider.curPage);
 
@@ -57,6 +59,7 @@ const controlSlider = function(goTo) {
         model.updateSliderData(model.state.slider.curPage, data);
 
         // 3) Display the goTo page
+        sliderView.slideAnimation(goTo > model.state.slider.curPage ? 'right' : 'left');
         sliderView.displaySection(goTo);
 
         // 4) Update the current page in the model

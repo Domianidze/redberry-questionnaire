@@ -29,7 +29,7 @@ class personalView extends SliderSectionView {
         const data = this.getData();
         let error = false;
 
-        // First name
+        // First name Validation
         if(data.firstName === '') {
             this._errors.firstName.textContent = '* first name is required';
             this._errors.firstName.parentNode.classList.add("error");
@@ -48,7 +48,7 @@ class personalView extends SliderSectionView {
             this._errors.firstName.parentNode.classList.remove("error");
         }
 
-        // Last name
+        // Last name Validation
         if(data.lastName === '') {
             this._errors.lastName.textContent = '* last name is required';
             this._errors.lastName.parentNode.classList.add("error");
@@ -67,7 +67,7 @@ class personalView extends SliderSectionView {
             this._errors.lastName.parentNode.classList.remove("error");
         }
 
-        // Email
+        // Email Validation
         const validateEmail= (email) => {
             var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return regex.test(String(email).toLowerCase());
@@ -91,7 +91,7 @@ class personalView extends SliderSectionView {
             this._errors.eMail.parentNode.classList.remove("error");
         }
 
-        // Phone number
+        // Phone number Validation
         if(data.tel.length > 5 && (!data.tel.startsWith('+9955') || data.tel.length !== 12)) {
             this._errors.tel.textContent = '* please enter a valid phone number';
             this._errors.tel.parentNode.classList.add("error");

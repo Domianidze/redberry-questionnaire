@@ -1,4 +1,7 @@
+// GSAP
 import gsap from "gsap";
+
+// Config
 import { SUBMIT_ANIMATION_TIME } from "../config";
 
 class submitView {
@@ -16,6 +19,7 @@ class submitView {
         const btns = this._parentElement.querySelector('.btns');
         const text = this._parentElement.querySelector('p');
 
+        // Transition using GSAP
         gsap.to(btns, {
             opacity: 0,
             ease: 'Power2.easeOut',
