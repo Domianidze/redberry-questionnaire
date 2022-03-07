@@ -1,4 +1,4 @@
-// Imports          
+// Imports        
 @import "variables";
 @import "mixins";
 @import "fonts";
@@ -26,7 +26,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     -webkit-appearance: none;
 }
 
-a, button {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+a {
     transition: .5s;
 }
 
@@ -286,7 +296,7 @@ main {
                     }
 
                     // Insights section 
-                    .insigts {
+                    .insights {
                         .question {
                             padding-bottom: 50px;
 
@@ -388,25 +398,49 @@ main {
                         .input-div {
                             position: relative;
 
+                            p {
+                                font-family: 'Montserrat', sans-serif;
+                                font-style: italic;
+                            }
+
                             .error-message {
                                 position: absolute;
                                 bottom: -5px;
                                 left: 50px;
-                                font-family: 'Montserrat', sans-serif;
                                 font-size: 12px;
-                                font-style: italic;
                                 color: $mainColor;
                             }
 
+                            .country-code {
+                                position: absolute;
+                                top: 50%;
+                                left: 50px;
+                                transform: translate(0, -50%);
+                                font-size: 14px;
+                            }
+
                             &.error {
+                                margin-bottom: 15px;
+
                                 input {
                                     border: 1px solid $mainColor;
                                 }
                             }
                         }
 
+                        .textarea-div {
+                            position: relative;
 
-                        input[type=text], input[type=email], input[type=tel], input[type=date], select {
+                            .error-message {
+                                position: absolute;
+                                bottom: -5px;
+                                left: 15px;
+                                font-size: 12px;
+                                color: $mainColor;
+                            }
+                        }
+
+                        input[type=text], input[type=email], input[type=tel], input[type=date], input[type=number], select {
                             margin: 20px 0;
                             padding: 0 50px;
                             width: 450px;
@@ -419,7 +453,13 @@ main {
                             outline: none;
                         }
 
-                        button {
+                        input[type=tel] {
+                            padding-left: 94px;
+                        }
+
+                        a {
+                            @include flexCenter(row);
+
                             width: 200px;
                             height: 35px;
                             color: white;
@@ -442,12 +482,28 @@ main {
                                 display: none;
                             }
 
+                            .error-message {
+                                position: absolute;
+                                bottom: -5px;
+                                left: 50px;
+                                font-family: 'Montserrat', sans-serif;
+                                font-size: 12px;
+                                font-style: italic;
+                                color: $mainColor;
+                            }
+
                             img {
                                 position: absolute;
                                 top: 50%;
                                 right: 5%;
                                 transform: translate(-50%, -50%);
                                 pointer-events: none;
+                            }
+
+                            &.error {
+                                select {
+                                    border: 1px solid $mainColor;
+                                }
                             }
                         }
 
@@ -493,6 +549,7 @@ main {
                             }
 
                             .when {
+                                display: none;
                                 padding-top: 50px;
 
                                 .custom-date-input {
@@ -525,15 +582,23 @@ main {
 
             // Personal information slide
             .personal-information {
-                // display: none;
+                display: none;
             }
 
             // Technical skillset slide
-            .technical-skillset {
-                // display: none;
+            .technical {
+                display: none;
 
                 form {
                     align-items: flex-end;
+
+                    > .error-message {
+                        padding-top: 5px;
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 12px;
+                        font-style: italic;
+                        color: $mainColor;
+                    }
                 }
 
                 .skill-set {
@@ -557,11 +622,12 @@ main {
                                 font-size: 14px;
                                 font-style: italic;
                                 color: black;
-
+                                text-transform: uppercase;
                             }
-
+                            
                             .skill-experience {
                                 padding-left: 50px;
+                                text-transform: initial;
                             }
                         }
 
@@ -577,15 +643,43 @@ main {
             }
 
             .covid {
-                // display: none;
+                display: none;
 
                 .info {
                     align-items: flex-start;
+
+                    form {
+                        .error-message {
+                            padding: 5px 0 0 10px;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 12px;
+                            font-style: italic;
+                            color: $mainColor;
+                        }
+                    }
                 }
             }
 
             .insights {
-                // display: none;
+                display: none;
+
+                .info {
+                    align-items: flex-start;
+
+                    form {
+                        .speak-devtalks-question {
+                            display: none;   
+                        }
+
+                        .error-message {
+                            padding: 5px 0 0 10px;
+                            font-family: 'Montserrat', sans-serif;
+                            font-size: 12px;
+                            font-style: italic;
+                            color: $mainColor;
+                        }
+                    }
+                }
             }
             
             .slider-nav {

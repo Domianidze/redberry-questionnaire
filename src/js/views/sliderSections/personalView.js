@@ -1,66 +1,108 @@
-class personalView {
-    _parentElement = document.querySelector('#slider');
-    _leftDiv = this._parentElement.querySelector('.left .wrapper');
-    _rightDiv = this._parentElement.querySelector('.right .wrapper');
+// Parent
+import SliderSectionView from './SliderSectionView';
 
-    display() {
-        const leftDivMarkup = `
-            <section class="personal-information">
-                <div class="header">
-                    <h4>Hey, Rocketeer, what are your coordinates?</h4>
-                </div>
-                <div class="info">
-                    <form>
-                        <div class="input-div error">
-                            <input type="text" id="first-name" name="first-name" placeholder="First Name">
-                            <p class="error-message">* first name is required</p>
-                        </div>
-                        <div class="input-div error">
-                            <input type="text" id="last-name" name="last-name" placeholder="Last Name">
-                            <p class="error-message">* last name should include 3 or more characters</p>
-                        </div>
-                        <div class="input-div">
-                            <input type="email" id="e-mail" name="e-mail" placeholder="E Mail">
-                            <p class="error-message"></p>
-                        </div>
-                        <div class="input-div">
-                            <input type="tel" id="phone-number" name="phone-number" placeholder="+955 5_ _ _ _">
-                            <p class="error-message"></p>
-                        </div>
-                    </form>
-                </div>
-            </section>
-        `
-
-        const rightDivMarkup = `
-            <section class="personal-information">
-                <div class="header">
-                    <h4>Redberry Origins</h4>
-                </div>
-                <div class="info">
-                    <p>You watch “What? Where? When?” Yeah. Our founders used to play it. That’s where they got a question about a famous American author and screenwriter Ray Bradbury. Albeit, our CEO Gaga Darsalia forgot the exact name and he answered Ray Redberry. And at that moment, a name for a yet to be born company was inspired - Redberry 😇</p>
-                </div>
-            </section>
-        `
-
-        this._leftDiv.innerHTML = leftDivMarkup;
-        this._rightDiv.innerHTML = rightDivMarkup;
+class personalView extends SliderSectionView {
+    _leftDiv = this._parentElement.querySelector('.left .personal-information');
+    _rightDiv = this._parentElement.querySelector('.right .personal-information');
+    _errors = {
+        firstName: this._leftDiv.querySelector('.input-div.first-name .error-message'),
+        lastName: this._leftDiv.querySelector('.input-div.last-name .error-message'),
+        eMail: this._leftDiv.querySelector('.input-div.e-mail .error-message'),
+        tel: this._leftDiv.querySelector('.input-div.tel .error-message')
     }
-
+    
     getData() {
-        const section = this._leftDiv.querySelector('.personal-information');
-        const inputs = section.querySelectorAll('input');
+        const inputs = this._leftDiv.querySelectorAll('input');
         const data = Array.from(inputs).map(input => {
             return input.value;
         });
-
+        
         return {
             firstName: data[0],
             lastName: data[1],
             eMail: data[2],
-            tel: data[3]
+            tel: `+9955${data[3]}`
         }
     }
-}
+    
+    validate() {
+        const data = this.getData();
+        let error = false;
+
+        // First name
+        if(data.firstName === '') {
+            this._errors.firstName.textContent = '* first name is required';
+            this._errors.firstName.parentNode.classList.add("error");
+            error = true;
+        } else {
+            this._errors.firstName.textContent = '';
+            this._errors.firstName.parentNode.classList.remove("error");
+        }
+
+        if(data.firstName.length < 2 && data.firstName !== '') {
+            this._errors.firstName.textContent = '* first name should include 2 or more characters';
+            this._errors.firstName.parentNode.classList.add("error");
+            error = true;
+        } else if(data.firstName.length >= 2 && !data.firstName !== '') {
+            this._errors.firstName.textContent = '';
+            this._errors.firstName.parentNode.classList.remove("error");
+        }
+
+        // Last name
+        if(data.lastName === '') {
+            this._errors.lastName.textContent = '* last name is required';
+            this._errors.lastName.parentNode.classList.add("error");
+            error = true;
+        } else {
+            this._errors.lastName.textContent = '';
+            this._errors.lastName.parentNode.classList.remove("error");
+        }
+
+        if(data.lastName.length < 2 && data.lastName !== '') {
+            this._errors.lastName.textContent = '* last name should include 2 or more characters';
+            this._errors.lastName.parentNode.classList.add("error");
+            error = true;
+        } else if(data.lastName.length >= 2 && !data.lastName !== '') {
+            this._errors.lastName.textContent = '';
+            this._errors.lastName.parentNode.classList.remove("error");
+        }
+
+        // Email
+        const validateEmail= (email) => {
+            var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return regex.test(String(email).toLowerCase());
+        }
+
+        if(data.eMail === '') {
+            this._errors.eMail.textContent = '* email is required';
+            this._errors.eMail.parentNode.classList.add("error");
+            error = true;
+        } else {
+            this._errors.eMail.textContent = '';
+            this._errors.eMail.parentNode.classList.remove("error");
+        }
+
+        if(!validateEmail(data.eMail) && data.eMail !== '') {
+            this._errors.eMail.textContent = '* please enter a valid email';
+            this._errors.eMail.parentNode.classList.add("error");
+            error = true;
+        } else if(validateEmail(data.eMail) && data.eMail !== '') {
+            this._errors.eMail.textContent = '';
+            this._errors.eMail.parentNode.classList.remove("error");
+        }
+
+        // Phone number
+        if(data.tel.length > 5 && (!data.tel.startsWith('+9955') || data.tel.length !== 12)) {
+            this._errors.tel.textContent = '* please enter a valid phone number';
+            this._errors.tel.parentNode.classList.add("error");
+            error = true;
+        } else {
+            this._errors.tel.textContent = '';
+            this._errors.tel.parentNode.classList.remove("error");
+        }   
+
+        return error;
+    }
+}       
 
 export default new personalView();

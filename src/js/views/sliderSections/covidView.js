@@ -1,97 +1,129 @@
-// IMGS
-import calendarImg from '../../../img/slider/icons/calendar.png'
+// Parent
+import SliderSectionView from './SliderSectionView';
 
-class covidView {
-    _parentElement = document.querySelector('#slider');
-    _leftDiv = this._parentElement.querySelector('.left .wrapper');
-    _rightDiv = this._parentElement.querySelector('.right .wrapper');
+class covidView extends SliderSectionView {
+    _leftDiv = this._parentElement.querySelector('.left .covid');
+    _rightDiv = this._parentElement.querySelector('.right .covid');
+    _covidContactQuestion = this._leftDiv.querySelector('.covid-contact-question');
+    _vaccinateQuestion = this._leftDiv.querySelector('.vaccinate-question');
+    _errors = {
+        workSpace: this._leftDiv.querySelector('.error-message.work-space'),
+        covidContact: this._leftDiv.querySelector('.error-message.covid-contact'),
+        covidContactWhen: this._covidContactQuestion.querySelector('.when .error-message'),
+        vaccinate: this._leftDiv.querySelector('.error-message.vaccinate'),
+        vaccinateWhen: this._vaccinateQuestion.querySelector('.when .error-message')
+    }
 
-    display() {
-        const leftDivMarkup = `
-            <section class="covid">
-                <div class="header">
-                    <h4>Covid Stuff</h4>
-                </div>
-                <div class="info">
-                    <form>
-                        <div class="work-space-question question">
-                            <p>How would you prefer to work?</p>
-                            <label for="office">
-                                <input type="radio" id="office" name="work-space" value="office"> From Sairme Office
-                            </label>
-                            <label for="home">
-                                <input type="radio" id="home" name="work-space" value="home"> From Home
-                            </label>
-                            <label for="hybrid">
-                                <input type="radio" id="hybrid" name="work-space" value="hybrid"> Hybrid
-                            </label>
-                        </div>
-                        <div class="covid-contact-question question">
-                            <p>Did you contact Covid-19? :(</p>
-                            <label for="yes">
-                                <input type="radio" id="yes" name="covid-contact" value="yes"> Yes
-                            </label>
-                            <label for="no">
-                                <input type="radio" id="no" name="covid-contact" value="no"> No
-                            </label>
-                            
-                            <div class="when">
-                                <p>When?</p>
-                                <div class="input-div custom-date-input">
-                                    <input type="date" id="covid-contact-date" name="covid-contact-date">
-                                    <img src="${calendarImg}" alt="calendar">
-                                    <p class="error-message"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="vaccinate-question question">
-                            <p>Have you been vaccinated?</p>
-                            <label for="yes">
-                                <input type="radio" id="yes" name="vaccinate" value="yes"> Yes
-                            </label>
-                            <label for="no">
-                                <input type="radio" id="no" name="vaccinate" value="no"> No
-                            </label>
-                            
-                            <div class="when">
-                                <p>When did you get your last covid vaccine?</p>
-                                <div class="input-div custom-date-input">
-                                    <input type="date" id="vaccinate-date" name="vaccinate-date">
-                                    <img src="${calendarImg}" alt="calendar">
-                                    <p class="error-message"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </section>
-            `
+    constructor() {
+        super();
+        this.addHandlerDisplayWhen();
+    }
 
-            const rightDivMarkup = `
-            <section class="covid">
-                <div class="header">
-                    <h4>Redberry Covid Policies</h4>
-                </div>
-                <div class="info">
-                    <p>As this infamous pandemic took over the world, we adjusted our working practices so that our employees can be as safe and comfortable as possible. We have a hybrid work environment, so you can either work from home or visit our lovely office on Sairme Street. If it was up to us, we would love you to see us in the office because we think face-to-face communications > Zoom meetings. Both on the fun and productivity scales.</p>
-                </div>
-            </section>
-            `
+    addHandlerDisplayWhen() {
+        this._covidContactQuestion.addEventListener('click', function() {
+            const yesRadio = this.querySelector('#covid-contact-yes');
+            const whenInput = this.querySelector('.when');
 
-            this._leftDiv.innerHTML = leftDivMarkup;
-            this._rightDiv.innerHTML = rightDivMarkup;
+            if(yesRadio.checked) {
+                whenInput.style.display = 'block';
+            } else {
+                whenInput.style.display = 'none'
+            }
+        });
+
+        this._vaccinateQuestion.addEventListener('click', function() {
+            const yesRadio = this.querySelector('#vaccinate-yes');
+            const whenInput = this.querySelector('.when');
+
+            if(yesRadio.checked) {
+                whenInput.style.display = 'block';
+            } else {
+                whenInput.style.display = 'none'
+            }
+        });
     }
 
     getData() {
-        const section = this._leftDiv.querySelector('.covid');
         const data = {
-            workSpace: (section.querySelector('input[name="work-space"]:checked')?.value ?? ''),
-            covidContact: (section.querySelector('input[name="covid-contact"]:checked')?.value ?? ''),
-            covidContactDate: section.querySelector('input[name="covid-contact-date"]').value,
-            vaccinate: (section.querySelector('input[name="vaccinate"]:checked')?.value ?? ''),
-            vaccinateDate: section.querySelector('input[name="vaccinate-date"]').value
+            workSpace: (this._leftDiv.querySelector('input[name="work-space"]:checked')?.value ?? ''),
+            covidContact: (this._leftDiv.querySelector('input[name="covid-contact"]:checked')?.value ?? ''),
+            covidContactDate: this._leftDiv.querySelector('input[name="covid-contact-date"]').value,
+            vaccinate: (this._leftDiv.querySelector('input[name="vaccinate"]:checked')?.value ?? ''),
+            vaccinateDate: this._leftDiv.querySelector('input[name="vaccinate-date"]').value
         }
         return data
+    }
+
+    validate() {
+        const data = this.getData();
+        let error = false;
+
+        if(data.workSpace === '') {
+            this._errors.workSpace.textContent = '* question required';
+            error = true;
+        } else {
+            this._errors.workSpace.textContent = '';
+        }
+
+        if(data.covidContact === '') {
+            this._errors.covidContact.textContent = '* question required';
+            error = true;
+        } else {
+            this._errors.covidContact.textContent = '';
+        }
+
+        if(data.covidContact === 'yes') {
+            if(data.covidContactDate === '') {
+                this._errors.covidContactWhen.textContent = '* date required';
+                error = true;
+            } else if(!this._validateDate(data.covidContactDate)) {
+                this._errors.covidContactWhen.textContent = '* please enter valid date';
+                error = true;
+            } else {
+                this._errors.covidContactWhen.textContent = '';
+            }
+        }
+
+        if(data.vaccinate === '') {
+            this._errors.vaccinate.textContent = '* question required';
+            error = true;
+        } else {
+            this._errors.vaccinate.textContent = '';
+        }
+
+        if(data.vaccinate === 'yes') {
+            if(data.vaccinateDate === '') {
+                this._errors.vaccinateWhen.textContent = '* date required';
+                error = true;
+            } else if(!this._validateDate(data.vaccinateDate)) {
+                this._errors.vaccinateWhen.textContent = '* please enter valid date';
+                error = true;
+            } else {
+                this._errors.vaccinateWhen.textContent = ''
+            }
+        }
+
+        return error;
+    }
+
+    _validateDate(date) {
+        const curDate = new Date();
+        const dateArr = date.split('-');
+        const dateArrInt = dateArr.map(el => {
+           return parseInt(el);
+        }) 
+
+        if(dateArr.length !== 3 || dateArr[1].length !== 2 || dateArr[2].length !== 2 || dateArr[0].length !== 4) {
+            return false
+        } else if(dateArrInt[0] > curDate.getFullYear()) {
+            return false
+        } else if(dateArrInt[0] === curDate.getFullYear() && dateArrInt[1] > (curDate.getMonth() + 1)) {
+            return false
+        } else if(dateArrInt[0] === curDate.getFullYear() && dateArrInt[1] === (curDate.getMonth() + 1) && dateArrInt[2] > curDate.getDate()) {
+            return false
+        } else {
+            return true
+        }
     }
 }
 

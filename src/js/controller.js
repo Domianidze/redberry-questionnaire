@@ -1,9 +1,12 @@
-import * as model from "./model"
+import * as model from "./model";
 import sectionView from "./views/sectionView";
+import landingView from "./views/landingView";
 import submittedView from "./views/submittedView";
 import sliderView from "./views/sliderView";
 import navbarView from "./views/navbarView";
 import submitView from "./views/submitView";
+import technicalView from "./views/sliderSections/technicalView";
+import personalView from "./views/sliderSections/personalView";
 
 const controlSection = function(e) {
     let section = window.location.hash.slice(1);
@@ -21,9 +24,11 @@ const controlSection = function(e) {
 
     // 3) Change current page in the state
     model.updateCurPage(section);
+
 }
 
 const controlSlider = function(goTo) {
+
     // 1) Format the goTo number
     if(goTo === 'previous') {
         goTo = model.state.slider.curPage - 1;
@@ -40,17 +45,24 @@ const controlSlider = function(goTo) {
     if(goTo - model.state.slider.completed <= 1) {
         let data;
 
-        // 1) Get data from the correct page and update the model
+        // 1) Get and validate data from the correct page
+        const error = sliderView.valdiateData(model.state.slider.curPage);
+
+        // Guard clause for error during validation
+        if(error) return;
+
         data = sliderView.getData(model.state.slider.curPage);
+
+        // 2) Update the model
         model.updateSliderData(model.state.slider.curPage, data);
 
-        // 2) Display the goTo page
+        // 3) Display the goTo page
         sliderView.displaySection(goTo);
 
-        // 3) Update the current page in the model
+        // 4) Update the current page in the model
         model.updateSliderCurPage(goTo);
 
-        // 4) Update the navbar
+        // 5) Update the navbar
         navbarView.updateNavBar(model.state.slider.completed, model.state.slider.curPage);
 
         // Check if goTo page hasn't yet been completed
@@ -61,13 +73,26 @@ const controlSlider = function(goTo) {
             
             // 2) Update the navbar
             navbarView.updateNavBar(model.state.slider.completed, model.state.slider.curPage);
+
+            // 3) Update landing if needed
+            if(model.state.slider.completed > 1) {
+                landingView.updateStartBtn();
+            }
         }
+
     }
 
     // Check if goTo goes to the submit page
-    if(goTo > 4) {
+    if(goTo > 4 && model.state.slider.completed === 4) {
         window.location.hash = '#submit';
     }
+}
+
+const controlAddSkill = function() {
+
+    // Add skill to the UI
+    technicalView.addSkill();
+
 }
 
 const controlSubmit = function() {
@@ -86,5 +111,6 @@ const init = function() {
     sliderView.displaySection();
     navbarView.addHandlerDisplaySection(controlSlider);
     submitView.addHandlerSubmit(controlSubmit);
+    technicalView.addHandlerAddSkill(controlAddSkill);
 }
 init();
