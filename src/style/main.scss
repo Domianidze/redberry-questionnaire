@@ -690,6 +690,7 @@ main {
                 .slides {
                     padding: 0 10px;
                     display: flex;
+                    align-items: center;
 
                     div {
                         margin: 0 5px;
@@ -700,6 +701,8 @@ main {
                         opacity: 0.2;
                         cursor: pointer;
                         transition: .5s;
+                        border: 2px solid $mainColor;
+                        box-sizing: border-box;
 
                         &:hover {
                             opacity: 0.8;
@@ -711,12 +714,14 @@ main {
                         opacity: 1;
 
                         &:hover {
-                            box-shadow: 1px 1px 5px black;
+                            // box-shadow: 1px 1px 5px black;
+                            border: 2px solid $formColor;
                         }
                     }
 
                     div.active {
-                        box-shadow: 1px 1px 5px black;
+                        // box-shadow: 1px 1px 5px black;
+                        border: 2px solid $formColor;
                     }
                 }
 

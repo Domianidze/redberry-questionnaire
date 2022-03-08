@@ -105,6 +105,12 @@ class insightsView extends SliderSectionView {
 
         return error;
     }
+
+    clearErrors() {
+        this._errors.attendOrganizeDevtalks.textContent = '';
+        this._errors.speakDevtalks.textContent = '';
+        this._errors.special.textContent = '';
+    }
 }
 
 export default new insightsView();

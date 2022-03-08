@@ -22,7 +22,9 @@ export const updateCurPage = function(curPage) {
 export const updateSliderCurPage = function(curPage) {
     // Check if curpage is valid
     if(curPage <= AMOUNT_OF_SLIDER_PAGES) {
+        const prevPage = state.slider.curPage;
         state.slider.curPage = curPage
+        return prevPage;
     }
 }
 

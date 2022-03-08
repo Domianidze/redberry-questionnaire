@@ -41,36 +41,42 @@ const controlSlider = function(goTo) {
     // Check if goTo goes to the landing page
     if(goTo < 1) {
         window.location.hash = '#landing';
+        return
     }
     
     // Check if goTo page is accessible
     if(goTo - model.state.slider.completed <= 1) {
         let data;
 
-        // 1) Get and validate data from the correct page
-        const error = sliderView.valdiateData(model.state.slider.curPage);
+        // 1) Get and validate data from the correct page {
 
-        // Check if we have an error and play error animation if needed (Guard Clause)
-        if(error) return sliderView.errorAniamtion();
+            const error = sliderView.valdiateData(model.state.slider.curPage);
 
-        data = sliderView.getData(model.state.slider.curPage);
+            // Check if we have an error and play error animation if needed (Guard Clause)
+            if((error && goTo > model.state.slider.completed) || error && model.state.slider.curPage < model.state.slider.completed) return sliderView.errorAniamtion();
 
+            sliderView.clearErrors(model.state.slider.curPage);
+
+            data = sliderView.getData(model.state.slider.curPage);
+
+        // }
+        
         // 2) Update the model
         model.updateSliderData(model.state.slider.curPage, data);
 
-        // 3) Display the goTo page
+        // 3) Display the goTo page with an animation
         sliderView.slideAnimation(goTo > model.state.slider.curPage ? 'right' : 'left');
         sliderView.displaySection(goTo);
 
         // 4) Update the current page in the model
-        model.updateSliderCurPage(goTo);
+        const prevPage = model.updateSliderCurPage(goTo);
 
         // 5) Update the navbar
         navbarView.updateNavBar(model.state.slider.completed, model.state.slider.curPage);
 
-        // Check if goTo page hasn't yet been completed
+        // Check if goTo page should be completed or uncompleted
         if(goTo > model.state.slider.completed) {
-            
+
             // 1) Update the completed pages in the model
             model.updateSliderCompleted(goTo);
             
@@ -81,8 +87,24 @@ const controlSlider = function(goTo) {
             if(model.state.slider.completed > 1) {
                 landingView.updateStartBtn();
             }
+
+        } else if(goTo < model.state.slider.completed && prevPage === model.state.slider.completed && error) {
+
+            // 1) Update the completed pages in the model
+            model.updateSliderCompleted(model.state.slider.completed - 1);
+
+            // 2) Update the navbar
+            navbarView.updateNavBar(model.state.slider.completed, model.state.slider.curPage);
+
+            // 3) Update landing if needed
+            if(model.state.slider.completed > 1) {
+                landingView.updateStartBtn();
+            }
+
         }
 
+    } else {
+        navbarView.displayError(model.state.slider.completed + 1);
     }
 
     // Check if goTo goes to the submit page

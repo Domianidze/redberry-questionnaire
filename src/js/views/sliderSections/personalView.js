@@ -103,6 +103,17 @@ class personalView extends SliderSectionView {
 
         return error;
     }
+
+    clearErrors() {
+        this._errors.firstName.textContent = '';
+        this._errors.firstName.parentNode.classList.remove("error");
+        this._errors.lastName.textContent = '';
+        this._errors.lastName.parentNode.classList.remove("error");
+        this._errors.eMail.textContent = '';
+        this._errors.eMail.parentNode.classList.remove("error");
+        this._errors.tel.textContent = '';
+        this._errors.tel.parentNode.classList.remove("error");
+    }
 }       
 
 export default new personalView();

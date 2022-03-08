@@ -142,6 +142,14 @@ class covidView extends SliderSectionView {
         return error;
     }
 
+    clearErrors() {
+        this._errors.workSpace.textContent = '';
+        this._errors.covidContact.textContent = '';
+        this._errors.covidContactWhen.textContent = '';
+        this._errors.vaccinate.textContent = '';
+        this._errors.vaccinateWhen.textContent = ''
+    }
+
     _validateDate(date) {
         const curDate = new Date();
         const dateArr = date.split('-');

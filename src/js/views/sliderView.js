@@ -96,6 +96,19 @@ class sliderView {
             return insightsView.validate();
         }
     }
+
+    clearErrors(section) {
+        // Clear erros of the correct section
+        if(section === 1) {
+            personalView.clearErrors();
+        } else if(section === 2) {
+            technicalView.clearErrors();
+        } else if(section === 3) {
+            covidView.clearErrors();
+        } else if(section === 4) {
+            insightsView.clearErrors();
+        }
+    }
 }
 
 export default new sliderView();

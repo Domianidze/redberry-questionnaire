@@ -139,6 +139,14 @@ class skillsetView extends SliderSectionView {
 
         return error;
     }
+
+    clearErrors() {
+        this._errors.selectError.textContent = '';
+        this._errors.selectError.parentNode.classList.remove("error");
+        this._errors.inputError.textContent = ''
+        this._errors.inputError.parentNode.classList.remove("error");
+        this._errors.skillsError.textContent = '';
+    }
 }
 
 export default new skillsetView();
