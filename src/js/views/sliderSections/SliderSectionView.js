@@ -10,6 +10,10 @@ class SliderSectionView {
         this._leftDiv.style.display = 'none';
         this._rightDiv.style.display = 'none';
     }
+
+    resetForm() {
+        this._leftDiv.querySelector('form').reset();
+    }
 }
 
 export default SliderSectionView;

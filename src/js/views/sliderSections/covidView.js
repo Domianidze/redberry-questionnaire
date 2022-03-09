@@ -22,16 +22,17 @@ class covidView extends SliderSectionView {
 
     constructor() {
         super();
-        this.addHandlerDisplayWhen();
+        this._addHandlerDisplayWhen();
     }
 
-    addHandlerDisplayWhen() {
+    _addHandlerDisplayWhen() {
         const gsapTransition = function(e, radioName) {
             const yesRadio = this.querySelector(radioName);
             const whenInput = this.querySelector('.when');
-    
-            // Avoid function running twice because of label (Guard Clause)
-            if(e.target.tagName === 'LABEL') return;
+            whenInput.style.opacity = '1'
+
+            // Avoid function running unless the radio is clicked (Guard Clause)
+            if(e.target.type !== 'radio') return;
     
             if(yesRadio.checked) {
                 // Avoid animation running twice
@@ -59,7 +60,6 @@ class covidView extends SliderSectionView {
                 });
                 setTimeout(() => {
                     whenInput.style.display = 'none'
-                    whenInput.style.opacity = '1'
                     this.style.pointerEvents = 'auto';
                 }, SLIDER_ANIMATION_TIME * 1000)
             }
@@ -72,6 +72,11 @@ class covidView extends SliderSectionView {
         this._vaccinateQuestion.addEventListener('click', function(e) {
             gsapTransition.call(this, e, '#vaccinate-yes');
         })
+    }
+
+    resetWhen() {
+        this._covidContactQuestion.querySelector('.when').style.display = 'none';
+        this._vaccinateQuestion.querySelector('.when').style.display = 'none';
     }
 
     getData() {

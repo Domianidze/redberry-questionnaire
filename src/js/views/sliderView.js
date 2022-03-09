@@ -109,6 +109,13 @@ class sliderView {
             insightsView.clearErrors();
         }
     }
+
+    resetForms() {
+        this._allSections.forEach(section => section.resetForm())
+        technicalView.resetSkills();
+        covidView.resetWhen();
+        insightsView.resetQuestion();
+    }
 }
 
 export default new sliderView();

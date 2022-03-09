@@ -13,6 +13,7 @@ import removeImg from '../../../img/slider/icons/remove.png'
 class skillsetView extends SliderSectionView {
     _leftDiv = this._parentElement.querySelector('.left .technical');
     _rightDiv = this._parentElement.querySelector('.right .technical');
+    _skillSelect = this._leftDiv.querySelector('.custom-select #skills');
     _addSkillBtn = this._leftDiv.querySelector('.add-skill-btn');
     _skillDiv = this._leftDiv.querySelector('.skill-set');
     _errors = {
@@ -24,17 +25,28 @@ class skillsetView extends SliderSectionView {
 
     constructor() {
         super();
-        this.addHandlerRemove();
+        this._addHandlerRemove();
+        this._addHandlerAddSkill();
     }
 
-    addHandlerAddSkill(handler) {
-        this._addSkillBtn.addEventListener('click', function(e) {
+    renderSkills(data) {
+        this._skillSelect.innerHTML = '<option value="hide" class="select-hidden">Skills</option>',
+
+        data.forEach(skill => {
+            this._skillSelect.insertAdjacentHTML('beforeend', `
+                <option value="${skill.id}">${skill.title}</option>
+            `);
+        })
+    }
+
+    _addHandlerAddSkill() {
+        this._addSkillBtn.addEventListener('click', e => {
             e.preventDefault();
-            handler();
+            this._addSkill();
         });
     }
 
-    addHandlerRemove() {
+    _addHandlerRemove() {
         this._skillDiv.addEventListener('click', function(e) {
             const removeBtn = e.target.closest('.remove-btn');
 
@@ -55,19 +67,23 @@ class skillsetView extends SliderSectionView {
         });
     }
 
-    addSkill() {;
-        const skillName = this._leftDiv.querySelector('select').value;
+    _addSkill() {
+        const skillSelect = this._leftDiv.querySelector('select');
+        const skillID = skillSelect.value;
+        const skillName = skillSelect.options[skillSelect.selectedIndex].text;
+        const skillNameClass = skillName.toLowerCase().replace('.', '-');
         const skillExperience = this._leftDiv.querySelector('input').value;
         let error = false;
 
-        const data = this.getData().map(skill => skill[0]);
+        // Get data and check if we already have the same skill
+        const data = this.getData().filter(skill => skill.id === +skillID);
 
         // Skill Name Validation
-        if(skillName === 'hide') {
+        if(skillName === 'Skills') {
             this._errors.selectError.textContent = '* please select a skill';
             this._errors.selectError.parentNode.classList.add("error");
             error = true;
-        } else if(data.includes(skillName)) {
+        } else if(data.length !== 0) {
             this._errors.selectError.textContent = '* you can only select the same skill once';
             this._errors.selectError.parentNode.classList.add("error");
             error = true;
@@ -94,33 +110,40 @@ class skillsetView extends SliderSectionView {
         if(error) return
         
         const markup = `
-            <div class="skill ${skillName}">
-            <div class="skill-text">
-            <p class="skill-name">${skillName}</p>
-            <p class="skill-experience">Years of Experience: ${skillExperience}</p>
-            </div>
-            <img src="${removeImg}" alt="remove" class="remove-btn">
+            <div class="skill ${skillNameClass}" data-id="${skillID}">
+                <div class="skill-text">
+                    <p class="skill-name">${skillName}</p>
+                    <p class="skill-experience" data-skillexperience="${skillExperience}">Years of Experience: ${skillExperience}</p>
+                </div>
+                <img src="${removeImg}" alt="remove" class="remove-btn">
             </div>
         `
 
         this._skillDiv.insertAdjacentHTML('beforeend', markup);
 
         // Transition using GSAP
-        const skill = this._skillDiv.querySelector(`.${skillName}`);
+        const skill = this._skillDiv.querySelector(`.${skillNameClass}`);
         gsap.from(skill, {
             opacity: 0,
             ease: 'Power2.easeOut',
             duration: SLIDER_ANIMATION_TIME
         });
     }
+
+    resetSkills() {
+        this._skillDiv.innerHTML = ''
+    }
     
     getData() {
         const skills = this._skillDiv.querySelectorAll('.skill');
         const data = Array.from(skills).map(skill => {
-            const skillName = skill.querySelector('.skill-name').textContent;
-            const skilkExperience = skill.querySelector('.skill-experience').textContent;
+            const skillID = skill.dataset.id;
+            const skillExperience = skill.querySelector('.skill-experience').dataset.skillexperience;
 
-            return [skillName, skilkExperience]
+            return {
+                id: +skillID, 
+                experience: +skillExperience
+            }
         });
         return data;
     }

@@ -33,7 +33,7 @@ class navbarView {
         });
     }
 
-    updateNavBar(completed, curPage) {
+    updateNavBar(completed = 1, curPage = 1) {
         this._slideBtns.forEach(slide => {
             const { goto } = slide.dataset
 

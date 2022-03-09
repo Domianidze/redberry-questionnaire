@@ -7,36 +7,49 @@ import { SUBMIT_ANIMATION_TIME } from "../config";
 class submitView {
     _parentElement = document.querySelector('#submit');
     _submitBtn = this._parentElement.querySelector('.submit-btn');
+    _btns = this._parentElement.querySelector('.btns');
+    _text = this._parentElement.querySelector('p');
+    _submitted = false;
 
     addHandlerSubmit(handler) {
-        this._submitBtn.addEventListener('click', function(e) {
+        this._submitBtn.addEventListener('click', e => {
             e.preventDefault();
-            handler();
+            if(!this._submitted) {
+                handler();
+            }
         })
     }
     
     displaySuccessMessage() {
-        const btns = this._parentElement.querySelector('.btns');
-        const text = this._parentElement.querySelector('p');
+        // Avoid submitting twice
+        this._submitted = true;
 
         // Transition using GSAP
-        gsap.to(btns, {
+        gsap.to(this._btns, {
             opacity: 0,
             ease: 'Power2.easeOut',
             duration: SUBMIT_ANIMATION_TIME,
         })
 
-        setTimeout(function() {
-            btns.style.display = 'none';
-            text.style.display = 'flex';
+        setTimeout(() => {
+            this._btns.style.display = 'none';
+            this._text.style.display = 'flex';
         }, SUBMIT_ANIMATION_TIME * 1000)
         
-        gsap.to(text, {
+        gsap.to(this._text, {
             opacity: 1,
             ease: 'Power2.easeOut',
             duration: SUBMIT_ANIMATION_TIME,
             delay: SUBMIT_ANIMATION_TIME,
         })
+    }
+
+    reset() {
+        this._btns.style.display = 'flex';
+        this._btns.style.opacity = 1;
+        this._text.style.display = 'none';
+        this._text.style.opacity = 0;
+        this._submitted = false;
     }
 }
 

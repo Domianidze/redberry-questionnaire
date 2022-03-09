@@ -10,6 +10,21 @@ class personalView extends SliderSectionView {
         eMail: this._leftDiv.querySelector('.input-div.e-mail .error-message'),
         tel: this._leftDiv.querySelector('.input-div.tel .error-message')
     }
+
+    constructor() {
+        super();
+        this._addHandlerMaxTel();
+    }
+
+    _addHandlerMaxTel() {
+        const tel = this._leftDiv.querySelector('.input-div.tel input');
+        tel.addEventListener('input', function() {
+            // Check if telephone number is more than 8 digits and cut it off if needed
+            if(tel.value.length > 8) {
+                tel.value = tel.value.slice(0, 8);
+            }
+        });
+    }
     
     getData() {
         const inputs = this._leftDiv.querySelectorAll('input');
@@ -92,7 +107,7 @@ class personalView extends SliderSectionView {
         }
 
         // Phone number Validation
-        if(data.tel.length > 5 && (!data.tel.startsWith('+9955') || data.tel.length !== 12)) {
+        if(data.tel.length > 5 && (!data.tel.startsWith('+9955') || data.tel.length !== 13)) {
             this._errors.tel.textContent = '* please enter a valid phone number';
             this._errors.tel.parentNode.classList.add("error");
             error = true;

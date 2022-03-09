@@ -26,9 +26,10 @@ class insightsView extends SliderSectionView {
         this._attendOrganizeDevtalksQuestion.addEventListener('click', function(e) {
             const yesRadio = this.querySelector('input#attend-organize-devtalks-yes');
             const speakDevtalksQuestion = document.querySelector('.left .insights .speak-devtalks-question');
+            speakDevtalksQuestion.style.opacity = 1
            
-            // Avoid function running twice because of label (Guard Clause)
-            if(e.target.tagName === 'LABEL') return;
+            // Avoid function running unless the radio is clicked (Guard Clause)
+            if(e.target.type !== 'radio') return;
 
             if(yesRadio.checked) {
                 // Avoid animation running twice
@@ -58,18 +59,21 @@ class insightsView extends SliderSectionView {
                 });
                 setTimeout(() => {
                     speakDevtalksQuestion.style.display = 'none'
-                    speakDevtalksQuestion.style.opacity = 1
                     this.style.pointerEvents = 'auto';
                 }, SLIDER_ANIMATION_TIME * 1000)
             }
         });
     }
 
+    resetQuestion() {
+        document.querySelector('.left .insights .speak-devtalks-question').style.display = 'none';
+    }
+
     getData() {
         const data = {
             attendOrganizeDevtalks: (this._leftDiv.querySelector('input[name="attend-organize-devtalks"]:checked')?.value ?? ''),
             speakDevtalks: this._leftDiv.querySelector('textarea[name="speak-devtalks"]').value,
-            special: this._leftDiv.querySelector('textarea[name="special"]').value,
+            special: this._leftDiv.querySelector('textarea[name="special"]').value
         }
         return data;
     }
