@@ -58,13 +58,13 @@ class submittedView {
                                     <p>First Name</p>
                                     <p>Last Name</p>
                                     <p>E Mail</p>
-                                    <p>Phone</p>
+                                    ${application.phone !== null ? '<p>Phone</p>' : ''}
                                 </div>
                                 <div class="answers">
                                     <p>${application.first_name}</p>
                                     <p>${application.last_name}</p>
                                     <p>${application.email}</p>
-                                    <p>${application.phone}</p>
+                                    ${application.phone !== null ? '<p>${application.phone}</p>' : ''}
                                 </div>
                             </div>
                         </section>

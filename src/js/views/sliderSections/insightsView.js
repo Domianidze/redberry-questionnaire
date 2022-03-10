@@ -130,7 +130,7 @@ class insightsView extends SliderSectionView {
             }
         }) 
 
-        this._inputs.special.value = data.special;
+        this._inputs.special.value = data.special !== undefined ? data.special : '';
     }
 
     clearErrors() {
