@@ -20,9 +20,7 @@ class navbarView {
         })
     }
 
-    displayError(requiredPage) {
-        // const slide = Array.from(this._slideBtns).filter(slide => +slide.dataset.goto === requiredPage)
-       
+    displayError() {
         gsap.fromTo(this._parentElement, 0.1,{
             x: -1,
         }, 

@@ -163,6 +163,28 @@ class skillsetView extends SliderSectionView {
         return error;
     }
 
+    async updateData(data, skills) {
+        data = data.skills;
+        skills = await skills;
+        
+        // Check if data exists (Guard Clause)
+        if(!data) return;
+
+        data.forEach(skill => {
+            const skillName = skills.filter(skillName => skillName.id === +skill.id)[0].title;
+
+            this._skillDiv.insertAdjacentHTML('beforeend', `
+                <div class="skill ${skillName}" data-id="${skill.id}">
+                    <div class="skill-text">
+                        <p class="skill-name">${skillName}</p>
+                        <p class="skill-experience" data-skillexperience="${skill.experience}">Years of Experience: ${skill.experience}</p>
+                    </div>
+                    <img src="${removeImg}" alt="remove" class="remove-btn">
+                </div>
+            `);
+        })
+    }
+
     clearErrors() {
         this._errors.selectError.textContent = '';
         this._errors.selectError.parentNode.classList.remove("error");

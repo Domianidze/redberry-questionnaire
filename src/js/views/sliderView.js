@@ -97,6 +97,16 @@ class sliderView {
         }
     }
 
+    updateData(data, skills) {
+        this._allSections.forEach(section => {
+            if(section === technicalView) {
+                section.updateData(data, skills);
+            } else {
+                section.updateData(data);
+            }
+        })
+    }
+
     clearErrors(section) {
         // Clear erros of the correct section
         if(section === 1) {

@@ -68,6 +68,21 @@ export const updateSliderData = function(curPage, data) {
     }
 }
 
+
+export const uploadSliderData = function() {
+    localStorage.setItem('sliderData', JSON.stringify(state.slider));
+}
+
+export const downloadSliderData = function() {
+    if(localStorage.getItem('sliderData')) {
+        state.slider = JSON.parse(localStorage.getItem('sliderData'));
+    }
+}
+
+export const deleteSliderData = function() {
+    localStorage.removeItem('sliderData');
+}
+
 // Async
 export const getApplicationsData = async function() {
     try {

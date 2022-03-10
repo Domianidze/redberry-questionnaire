@@ -9,7 +9,6 @@ class submitView {
     _submitBtn = this._parentElement.querySelector('.submit-btn');
     _btns = this._parentElement.querySelector('.btns');
     _text = this._parentElement.querySelector('p');
-    _submitted = false;
 
     addHandlerSubmit(handler) {
         this._submitBtn.addEventListener('click', e => {
@@ -21,9 +20,6 @@ class submitView {
     }
     
     displaySuccessMessage() {
-        // Avoid submitting twice
-        this._submitted = true;
-
         // Transition using GSAP
         gsap.to(this._btns, {
             opacity: 0,
@@ -49,7 +45,6 @@ class submitView {
         this._btns.style.opacity = 1;
         this._text.style.display = 'none';
         this._text.style.opacity = 0;
-        this._submitted = false;
     }
 }
 

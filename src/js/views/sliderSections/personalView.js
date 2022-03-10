@@ -4,6 +4,12 @@ import SliderSectionView from './SliderSectionView';
 class personalView extends SliderSectionView {
     _leftDiv = this._parentElement.querySelector('.left .personal-information');
     _rightDiv = this._parentElement.querySelector('.right .personal-information');
+    _inputs = {
+        firstName: this._leftDiv.querySelector('.input-div.first-name input'),
+        lastName: this._leftDiv.querySelector('.input-div.last-name input'),
+        eMail: this._leftDiv.querySelector('.input-div.e-mail input'),
+        tel: this._leftDiv.querySelector('.input-div.tel input')
+    }
     _errors = {
         firstName: this._leftDiv.querySelector('.input-div.first-name .error-message'),
         lastName: this._leftDiv.querySelector('.input-div.last-name .error-message'),
@@ -117,6 +123,18 @@ class personalView extends SliderSectionView {
         }   
 
         return error;
+    }
+
+    updateData(data) {
+        data = data.personalInformation;
+        
+        // Check if data exists (Guard Clause)
+        if(!data) return;
+        
+        this._inputs.firstName.value = data.firstName;
+        this._inputs.lastName.value = data.lastName;
+        this._inputs.eMail.value = data.eMail;
+        this._inputs.tel.value = data.tel.length > 5 ? +data.tel.slice(5) : '';
     }
 
     clearErrors() {

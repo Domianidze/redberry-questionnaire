@@ -11,6 +11,11 @@ class insightsView extends SliderSectionView {
     _leftDiv = this._parentElement.querySelector('.left .insights');
     _rightDiv = this._parentElement.querySelector('.right .insights');
     _attendOrganizeDevtalksQuestion = this._leftDiv.querySelector('.attend-organize-devtalks-question');
+    _inputs = {
+        attendOrganizeDevtalks: this._attendOrganizeDevtalksQuestion.querySelectorAll('.input'),
+        speakDevtalks: this._leftDiv.querySelector('.speak-devtalks-question'),
+        special: this._leftDiv.querySelector('.special-question textarea')
+    }
     _errors = {
         attendOrganizeDevtalks: this._attendOrganizeDevtalksQuestion.querySelector('.error-message'),
         speakDevtalks: this._leftDiv.querySelector('.speak-devtalks-question .error-message'),
@@ -90,6 +95,7 @@ class insightsView extends SliderSectionView {
             this._errors.attendOrganizeDevtalks.textContent = '';
         }
 
+        // Speak on Devtalks Validation
         if(data.attendOrganizeDevtalks === 'yes') {
             if(data.speakDevtalks === '') {
                 this._errors.speakDevtalks.textContent = '* field required';
@@ -108,6 +114,23 @@ class insightsView extends SliderSectionView {
         }
 
         return error;
+    }
+
+    updateData(data) {
+        data = data.insightQuestions;
+        
+        // Check if data exists (Guard Clause)
+        if(!data) return;
+
+        this._inputs.attendOrganizeDevtalks.forEach(radio => {
+            if(radio.value === data.attendOrganizeDevtalks) radio.checked = true;
+            if(radio.value === 'yes' && radio.checked) {
+                this._inputs.speakDevtalks.style.display = 'block';
+                this._inputs.speakDevtalks.querySelector('textarea').value = data.speakDevtalks;
+            }
+        }) 
+
+        this._inputs.special.value = data.special;
     }
 
     clearErrors() {

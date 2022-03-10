@@ -29,7 +29,7 @@ const controlSection = function(e) {
     }
 
     // Check if section is 'Submit', if 'Slider' has not yet been completed, Return to 'Slider'
-    if(section ==='submit' && model.state.slider.completed !== 4) {
+    if(section ==='submit' && (model.state.slider.completed !== 4 || sliderView.valdiateData(model.state.slider.curPage))) {
         section = 'slider';
         window.location.hash = '#slider';
     }
@@ -45,7 +45,7 @@ const controlSection = function(e) {
 
 }
 
-const controlSlider = function(goTo) {
+const controlSlider = function(goTo = model.state.slider.curPage, init) {
 
     // 1) Format the goTo number
     if(goTo === 'previous') {
@@ -79,7 +79,7 @@ const controlSlider = function(goTo) {
         
         // 2) Update the model
         model.updateSliderData(model.state.slider.curPage, data);
-
+        
         // 3) Display the goTo page with an animation
         sliderView.slideAnimation(goTo > model.state.slider.curPage ? 'right' : 'left');
         sliderView.displaySection(goTo);
@@ -126,6 +126,11 @@ const controlSlider = function(goTo) {
         window.location.hash = '#submit';
     }
 
+    // Upload slider data to the localstorage
+    // Check if goto page is first
+    if(goTo > 1) {
+        model.uploadSliderData();
+    }
 }
 
 const controlSubmit = async function() {
@@ -137,6 +142,7 @@ const controlSubmit = async function() {
         submitView.displaySuccessMessage(); 
         
         // 3) Reset everything and return to the landing page after some time
+        model.deleteSliderData();
         sliderView.resetForms();
         sliderView.displaySection();
         navbarView.updateNavBar();
@@ -202,9 +208,13 @@ const initSlider = async function() {
 
 }
 
-const init = function() {
+const init = async function() {
     sectionView.addHandlerDisplaySection(controlSection);
+    model.downloadSliderData();
     initSlider();
+    controlSlider(model.state.slider.curPage, true);
+    sliderView.updateData(model.state.slider.data, model.getSkillsData());
+    landingView.updateStartBtn(model.state.slider.completed);
     submitView.addHandlerSubmit(controlSubmit);
 }
 init();

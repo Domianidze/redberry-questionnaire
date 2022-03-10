@@ -12,6 +12,13 @@ class covidView extends SliderSectionView {
     _rightDiv = this._parentElement.querySelector('.right .covid');
     _covidContactQuestion = this._leftDiv.querySelector('.covid-contact-question');
     _vaccinateQuestion = this._leftDiv.querySelector('.vaccinate-question');
+    _inputs = {
+        workSpace: this._leftDiv.querySelectorAll('.work-space-question input'),
+        covidContact: this._leftDiv.querySelectorAll('.covid-contact-question input'),
+        covidContactWhen: this._covidContactQuestion.querySelector('.when'),
+        vaccinate: this._leftDiv.querySelectorAll('.vaccinate-question input'),
+        vaccinateWhen: this._vaccinateQuestion.querySelector('.when')
+    }
     _errors = {
         workSpace: this._leftDiv.querySelector('.error-message.work-space'),
         covidContact: this._leftDiv.querySelector('.error-message.covid-contact'),
@@ -145,6 +152,33 @@ class covidView extends SliderSectionView {
         }
 
         return error;
+    }
+
+    updateData(data) {
+        data = data.covidQuestions;
+        
+        // Check if data exists (Guard Clause)
+        if(!data) return;
+
+        this._inputs.workSpace.forEach(radio => {
+            if(radio.value === data.workSpace) radio.checked = true;
+        }) 
+
+        this._inputs.covidContact.forEach(radio => {
+            if(radio.value === data.covidContact) radio.checked = true;
+            if(radio.value === 'yes' && radio.checked) {
+                this._inputs.covidContactWhen.style.display = 'block';
+                this._inputs.covidContactWhen.querySelector('input').value = data.covidContactDate;
+            }
+        }) 
+
+        this._inputs.vaccinate.forEach(radio => {
+            if(radio.value === data.vaccinate) radio.checked = true;
+            if(radio.value === 'yes' && radio.checked) {
+                this._inputs.vaccinateWhen.style.display = 'block';
+                this._inputs.vaccinateWhen.querySelector('input').value = data.vaccinateDate;
+            }
+        }) 
     }
 
     clearErrors() {
